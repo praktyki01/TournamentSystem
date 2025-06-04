@@ -1,4 +1,6 @@
-﻿namespace TournamentSystem.Models
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace TournamentSystem.Models
 {
     public class Player
     {
@@ -11,9 +13,10 @@
         public string? PostalCode { get; set; }
         public string? Nickname { get; set; }
         public bool IsLeader { get; set; }
-
-        public int PlayerUserId { get; set; }
+        
         public int TeamId { get; set; }
         public Team? Team { get; set; }
+        public string PlayerUserId { get; set; }
+        public IdentityUser? PlayerUser { get; set; }
     }
 }
