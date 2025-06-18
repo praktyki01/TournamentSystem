@@ -48,7 +48,7 @@ namespace TournamentSystem.Controllers
         // GET: Tournament/Create
         public IActionResult Create()
         {
-            ViewData["GameId"] = new SelectList(_context.Game, "GameId", "GameId");
+            ViewData["GameId"] = new SelectList(_context.Game, "GameId", "Name");
             return View();
         }
 
@@ -59,13 +59,13 @@ namespace TournamentSystem.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("TournamentId,Name,Description,StartDate,EndDate,RegistrationStartDate,RegistrationEndDate,GameId")] Tournament tournament)
         {
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
                 _context.Add(tournament);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
-            ViewData["GameId"] = new SelectList(_context.Game, "GameId", "GameId", tournament.GameId);
+            //}
+            ViewData["GameId"] = new SelectList(_context.Game, "GameId", "Name", tournament.GameId);
             return View(tournament);
         }
 
