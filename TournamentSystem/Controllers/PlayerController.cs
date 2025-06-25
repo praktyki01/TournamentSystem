@@ -59,12 +59,27 @@ namespace TournamentSystem.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PlayerId,Name,Surname,PhoneNumber,City,Street,PostalCode,Nickname,IsLeader,TeamId,PlayerUserId")] Player player)
+        public async Task<IActionResult> Create([Bind("PlayerId,Name,Surname,PhoneNumber,City,Street,PostalCode,Nickname,IsLeader,TeamId,PlayerUserId")] Player player,
+            string teamName, string teamDescription, string teamTag, string logoURL)
         {
             if (ModelState.IsValid)
             {
+                //stworzenie drużyny
+                Team team = new Team();
+                team.Name = teamName;
+                team.Description = teamDescription;
+                team.TeamTag = teamTag;
+                team.LogoURL = logoURL;
+                _context.Add(team);
+                _context.SaveChanges();
+
+                //dodanie Playera do dużyny
+                player.TeamId = team.TeamId;
+                _context.Update(player);
+
                 _context.Add(player);
                 await _context.SaveChangesAsync();
+                                
                 return RedirectToAction(nameof(Index));
             }
             ViewData["PlayerUserId"] = new SelectList(_context.Users, "Id", "Id", player.PlayerUserId);

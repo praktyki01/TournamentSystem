@@ -12,7 +12,7 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="PlayerUserId"/>
+            <input type="hidden" value="@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value" asp-for="PlayerUserId" />
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
@@ -53,10 +53,28 @@
                     <input class="form-check-input" asp-for="IsLeader" /> @Html.DisplayNameFor(model => model.IsLeader)
                 </label>
             </div>
+
             <div class="form-group">
+                <label  class="control-label">Team name</label>
+                <input name="teamName"  class="form-control" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">Team description</label>
+                <input name="teamDescription" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">Team tag</label>
+                <input name="teamTag" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">Logo url</label>
+                <input name="logoURL" class="form-control" />             
+            </div>
+
+            @* <div class="form-group">
                 <label asp-for="TeamId" class="control-label"></label>
                 <select asp-for="TeamId" class ="form-control" asp-items="ViewBag.TeamId"></select>
-            </div>
+            </div> *@
            @*  <div class="form-group">
                 <label asp-for="PlayerUserId" class="control-label"></label>
                 <select asp-for="PlayerUserId" class ="form-control" asp-items="ViewBag.PlayerUserId"></select>
